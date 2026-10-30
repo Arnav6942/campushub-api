@@ -3,9 +3,16 @@ const { notFound } = require('../../utils/httpError');
 
 /**
  * Course catalogue for GET /api/courses.
- * `filters` holds the query-string options; none are supported yet.
+ * Supports ?department=CS to list one department's courses.
  */
 async function listCourses(filters = {}) {
+  if (filters.department) {
+    const { rows } = await db.query(
+      'SELECT id, code, title, department, credits, capacity, teacher_id FROM courses WHERE department = $1 ORDER BY code',
+      [String(filters.department).toUpperCase()],
+    );
+    return rows;
+  }
   const { rows } = await db.query(
     'SELECT id, code, title, department, credits, capacity, teacher_id FROM courses ORDER BY code',
   );
