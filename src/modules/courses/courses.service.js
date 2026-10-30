@@ -3,11 +3,14 @@ const { notFound } = require('../../utils/httpError');
 
 /**
  * Course catalogue for GET /api/courses.
- * `filters` holds the query-string options; none are supported yet.
+ * Supports ?page=2&pageSize=20 (pageSize is capped at 100).
  */
 async function listCourses(filters = {}) {
+  const page = Math.max(Number.parseInt(filters.page, 10) || 1, 1);
+  const pageSize = Math.min(Math.max(Number.parseInt(filters.pageSize, 10) || 20, 1), 100);
   const { rows } = await db.query(
-    'SELECT id, code, title, department, credits, capacity, teacher_id FROM courses ORDER BY code',
+    'SELECT id, code, title, department, credits, capacity, teacher_id FROM courses ORDER BY code LIMIT $1 OFFSET $2',
+    [pageSize, (page - 1) * pageSize],
   );
   return rows;
 }
