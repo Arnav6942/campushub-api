@@ -8,7 +8,7 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "test": "jest --runInBand",
-    "db:init": "psql \"$DATABASE_URL\" -f db/schema.sql && psql \"$DATABASE_URL\" -f db/seed.sql"
+    "db:init": "psql \"$DATABASE_URL\" -f db/schema.sql && psql \"$DATABASE_URL\" -f db/fees.sql && psql \"$DATABASE_URL\" -f db/seed.sql"
   },
   "engines": {
     "node": ">=20"
@@ -20,6 +20,8 @@
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "4.17.15",
+    "moment": "2.29.1",
     "pg": "^8.13.1"
   },
   "devDependencies": {
