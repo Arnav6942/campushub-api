@@ -13,5 +13,7 @@ router.use('/enrollments', require('./modules/enrollments/enrollments.routes'));
 router.use('/attendance', require('./modules/attendance/attendance.routes'));
 router.use('/library', require('./modules/library/library.routes'));
 router.use('/notices', require('./modules/notices/notices.routes'));
+router.use('/fees', require('./modules/fees/fees.routes'));
+router.use('/reports', require('./modules/reports/reports.routes'));
 
 module.exports = router;
